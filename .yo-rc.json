@@ -1,0 +1,39 @@
+{
+  "generator-jhipster": {
+    "promptValues": {
+      "packageName": "com.dreamfolkstech.appconfig"
+    },
+    "jhipsterVersion": "6.10.3",
+    "applicationType": "microservice",
+    "baseName": "AppConfig",
+    "packageName": "com.dreamfolkstech.appconfig",
+    "packageFolder": "com/dreamfolkstech/appconfig",
+    "serverPort": "9696",
+    "authenticationType": "uaa",
+    "uaaBaseName": "AuthService",
+    "cacheProvider": "ehcache",
+    "enableHibernateCache": false,
+    "websocket": false,
+    "databaseType": "sql",
+    "devDatabaseType": "mysql",
+    "prodDatabaseType": "mysql",
+    "searchEngine": false,
+    "messageBroker": false,
+    "serviceDiscoveryType": false,
+    "buildTool": "maven",
+    "enableSwaggerCodegen": false,
+    "jwtSecretKey": "ZDg2ODliNDA2MTgzYWZmNWQ3NmEwYmRiNjZiMGUxMTVkYWYwZTUzYmFkNmY2NzBiOWU1YWUzNjUzZjZiZDIzNWNjYWIxMGM3MDI1Y2U3OGJjZmI3NDI5ODc1YzMwMGMyNzI1NDI3NDRhMmI0NzQ4OTBjNzM4NDFiYzY3YmEzNTQ=",
+    "embeddableLaunchScript": false,
+    "creationTimestamp": 1602932057954,
+    "testFrameworks": [],
+    "jhiPrefix": "jhi",
+    "entitySuffix": "",
+    "dtoSuffix": "DTO",
+    "otherModules": [],
+    "enableTranslation": false,
+    "clientPackageManager": "npm",
+    "blueprints": [],
+    "skipClient": true,
+    "skipUserManagement": true
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "name": "Partner",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "minlength", "maxlength"],
+      "fieldValidateRulesMinlength": "1",
+      "fieldValidateRulesMaxlength": "50"
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String",
+      "fieldValidateRules": ["minlength", "maxlength"],
+      "fieldValidateRulesMinlength": "1",
+      "fieldValidateRulesMaxlength": "200"
+    },
+    {
+      "fieldName": "ownerType",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "sortOrder",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "status",
+      "fieldType": "GenericStatus",
+      "fieldValues": "ENABLED,DISABLED,INACTIVE"
+    }
+  ],
+  "relationships": [],
+  "changelogDate": "20201017105933",
+  "entityTableName": "partner",
+  "dto": "mapstruct",
+  "pagination": "pagination",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "AppConfig",
+  "applications": "*",
+  "microserviceName": "AppConfig"
+}

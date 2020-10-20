@@ -1,0 +1,77 @@
+enum GenericStatus{ ENABLED, DISABLED, INACTIVE }
+enum BooleanValue{ YES,NO }
+
+entity Application{
+	name String required minlength(1) maxlength(50)
+	code String required minlength(1) maxlength(20)
+	description String minlength(1) maxlength(200)
+	partnerId Integer
+	status GenericStatus
+
+	}
+
+entity ProductOffering{
+	name String required minlength(1) maxlength(50)
+	code String required minlength(1) maxlength(20)
+	description String minlength(1) maxlength(200)
+	sortOrder Integer
+	status GenericStatus
+	}
+
+entity ProductService{
+	name String required minlength(1) maxlength(50)
+	code String required minlength(1) maxlength(20)
+	description String minlength(1) maxlength(200)
+	status GenericStatus
+	}
+	
+	
+entity Partner{
+	name String required minlength(1) maxlength(50)
+	description String minlength(1) maxlength(200)
+	ownerType Integer
+	sortOrder Integer
+	status GenericStatus
+}
+
+entity AppProductService{
+	productServiceId Integer
+	status GenericStatus
+}
+
+
+entity AppUserFieldMap{
+	appId Integer
+	groupName String minlength(1) maxlength(50)
+	userFieldCode String minlength(1) maxlength(20)
+	userFieldName String minlength(1) maxlength(50)
+	isMandatory BooleanValue
+	profileScore Integer
+	validationRegex String 
+	registrationField BooleanValue
+}
+
+entity AppConfig{
+	name String required minlength(1) maxlength(50)
+	code String required minlength(1) maxlength(20)
+	value String
+	status GenericStatus
+}
+
+entity MasterUserField{
+	name String required minlength(1) maxlength(50)
+	code String required minlength(1) maxlength(20)
+	description String minlength(1) maxlength(200)
+	status GenericStatus
+}
+
+relationship OneToMany {
+		ProductOffering{ProductService} to ProductService{ProductOffering(name)}
+		Application{AppProductService} to AppProductService{Application(name)}
+		MasterUserField{AppUserFieldMap} to AppUserFieldMap{MasterUserField(name)}
+
+	}
+
+dto * with mapstruct
+service all with serviceImpl
+paginate all with pagination

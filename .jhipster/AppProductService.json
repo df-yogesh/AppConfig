@@ -1,0 +1,35 @@
+{
+  "name": "AppProductService",
+  "fields": [
+    {
+      "fieldName": "productServiceId",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "status",
+      "fieldType": "GenericStatus",
+      "fieldValues": "ENABLED,DISABLED,INACTIVE"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "application",
+      "otherEntityRelationshipName": "appProductService",
+      "relationshipName": "application",
+      "otherEntityField": "name"
+    }
+  ],
+  "changelogDate": "20201017110033",
+  "entityTableName": "app_product_service",
+  "dto": "mapstruct",
+  "pagination": "pagination",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "AppConfig",
+  "applications": "*",
+  "microserviceName": "AppConfig"
+}
