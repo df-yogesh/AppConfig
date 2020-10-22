@@ -1,6 +1,7 @@
 package com.dreamfolkstech.appconfig.service;
 
-import com.dreamfolkstech.appconfig.service.dto.ProductServiceDTO;
+import com.dreamfolkstech.appconfig.service.dto.ProductOfferingServiceDTO;
+import com.dreamfolkstech.common.errors.ExternalBaseResponse;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -8,17 +9,17 @@ import org.springframework.data.domain.Pageable;
 import java.util.Optional;
 
 /**
- * Service Interface for managing {@link com.dreamfolkstech.appconfig.domain.ProductService}.
+ * Service Interface for managing {@link com.dreamfolkstech.appconfig.domain.ProductOfferingService}.
  */
-public interface ProductServiceService {
+public interface ProductOfferingServiceService {
 
     /**
      * Save a productService.
      *
-     * @param productServiceDTO the entity to save.
+     * @param productOfferingServiceDTO the entity to save.
      * @return the persisted entity.
      */
-    ProductServiceDTO save(ProductServiceDTO productServiceDTO);
+    ProductOfferingServiceDTO save(ProductOfferingServiceDTO productOfferingServiceDTO);
 
     /**
      * Get all the productServices.
@@ -26,7 +27,7 @@ public interface ProductServiceService {
      * @param pageable the pagination information.
      * @return the list of entities.
      */
-    Page<ProductServiceDTO> findAll(Pageable pageable);
+    Page<ProductOfferingServiceDTO> findAll(Pageable pageable);
 
 
     /**
@@ -35,7 +36,7 @@ public interface ProductServiceService {
      * @param id the id of the entity.
      * @return the entity.
      */
-    Optional<ProductServiceDTO> findOne(Long id);
+    Optional<ProductOfferingServiceDTO> findOne(Long id);
 
     /**
      * Delete the "id" productService.
@@ -43,4 +44,5 @@ public interface ProductServiceService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+	
 }

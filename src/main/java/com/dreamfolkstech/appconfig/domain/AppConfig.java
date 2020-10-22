@@ -38,6 +38,9 @@ public class AppConfig extends AbstractBaseExtensibleEntity<Long> implements Ser
 	@Enumerated(EnumType.ORDINAL)
 	@Column(name = "status")
 	private GenericStatus status;
+	
+	@Column(name = "device_type")
+	private String deviceType;
 
 	public String getName() {
 		return name;
@@ -85,6 +88,14 @@ public class AppConfig extends AbstractBaseExtensibleEntity<Long> implements Ser
 	public AppConfig status(GenericStatus status) {
 		this.status = status;
 		return this;
+	}
+
+	public String getDeviceType() {
+		return deviceType;
+	}
+
+	public void setDeviceType(String deviceType) {
+		this.deviceType = deviceType;
 	}
 
 	public void setStatus(GenericStatus status) {

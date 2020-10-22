@@ -23,8 +23,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.dreamfolkstech.appconfig.service.ProductServiceService;
-import com.dreamfolkstech.appconfig.service.dto.ProductServiceDTO;
+import com.dreamfolkstech.appconfig.service.ProductOfferingServiceService;
+import com.dreamfolkstech.appconfig.service.dto.ProductOfferingServiceDTO;
 import com.dreamfolkstech.appconfig.web.rest.errors.ErrorConstants;
 import com.dreamfolkstech.common.dto.BaseResponse;
 import com.dreamfolkstech.common.errors.CustomException;
@@ -34,39 +34,39 @@ import io.github.jhipster.web.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 
 /**
- * REST controller for managing {@link com.dreamfolkstech.appconfig.domain.ProductService}.
+ * REST controller for managing {@link com.dreamfolkstech.appconfig.domain.ProductOfferingService}.
  */
 @RestController
 @RequestMapping("/api")
-public class ProductServiceResource {
+public class ProductOfferingServiceResource {
 
-    private final Logger log = LoggerFactory.getLogger(ProductServiceResource.class);
+    private final Logger log = LoggerFactory.getLogger(ProductOfferingServiceResource.class);
 
     private static final String ENTITY_NAME = "ProductService";
 
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
-    private final ProductServiceService productServiceService;
+    private final ProductOfferingServiceService productOfferingServiceService;
 
-    public ProductServiceResource(ProductServiceService productServiceService) {
-        this.productServiceService = productServiceService;
+    public ProductOfferingServiceResource(ProductOfferingServiceService productOfferingServiceService) {
+        this.productOfferingServiceService = productOfferingServiceService;
     }
 
     /**
      * {@code POST  /product-services} : Create a new productService.
      *
-     * @param productServiceDTO the productServiceDTO to create.
+     * @param productOfferingServiceDTO the productServiceDTO to create.
      * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new productServiceDTO, or with status {@code 400 (Bad Request)} if the productService has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/product-services")
-    public ResponseEntity<BaseResponse> createProductService(@Valid @RequestBody ProductServiceDTO productServiceDTO) throws URISyntaxException {
-        log.debug("REST request to save ProductService : {}", productServiceDTO);
-        if (productServiceDTO.getId() != null) {
+    public ResponseEntity<BaseResponse> createProductService(@Valid @RequestBody ProductOfferingServiceDTO productOfferingServiceDTO) throws URISyntaxException {
+        log.debug("REST request to save ProductService : {}", productOfferingServiceDTO);
+        if (productOfferingServiceDTO.getId() != null) {
             throw new CustomException(ErrorConstants.ENTITY_CREATE_ID_ERROR, ENTITY_NAME);
         }
-        ProductServiceDTO result = productServiceService.save(productServiceDTO);
+        ProductOfferingServiceDTO result = productOfferingServiceService.save(productOfferingServiceDTO);
         return ResponseEntity.created(new URI("/api/product-services/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
             .body(new BaseResponse(result));
@@ -75,21 +75,21 @@ public class ProductServiceResource {
     /**
      * {@code PUT  /product-services} : Updates an existing productService.
      *
-     * @param productServiceDTO the productServiceDTO to update.
+     * @param productOfferingServiceDTO the productServiceDTO to update.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated productServiceDTO,
      * or with status {@code 400 (Bad Request)} if the productServiceDTO is not valid,
      * or with status {@code 500 (Internal Server Error)} if the productServiceDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/product-services")
-    public ResponseEntity<BaseResponse> updateProductService(@Valid @RequestBody ProductServiceDTO productServiceDTO) throws URISyntaxException {
-        log.debug("REST request to update ProductService : {}", productServiceDTO);
-        if (productServiceDTO.getId() == null) {
+    public ResponseEntity<BaseResponse> updateProductService(@Valid @RequestBody ProductOfferingServiceDTO productOfferingServiceDTO) throws URISyntaxException {
+        log.debug("REST request to update ProductService : {}", productOfferingServiceDTO);
+        if (productOfferingServiceDTO.getId() == null) {
             throw new CustomException(ErrorConstants.ENTITY_FETCH_MISSING_ID_ERROR, ENTITY_NAME);
         }
-        ProductServiceDTO result = productServiceService.save(productServiceDTO);
+        ProductOfferingServiceDTO result = productOfferingServiceService.save(productOfferingServiceDTO);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, productServiceDTO.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, productOfferingServiceDTO.getId().toString()))
             .body(new BaseResponse(result));
     }
 
@@ -102,7 +102,7 @@ public class ProductServiceResource {
     @GetMapping("/product-services")
     public ResponseEntity<BaseResponse> getAllProductServices(Pageable pageable) {
         log.debug("REST request to get a page of ProductServices");
-        Page<ProductServiceDTO> page = productServiceService.findAll(pageable);
+        Page<ProductOfferingServiceDTO> page = productOfferingServiceService.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(new BaseResponse(page.getContent()));
     }
@@ -116,8 +116,8 @@ public class ProductServiceResource {
     @GetMapping("/product-services/{id}")
     public ResponseEntity<BaseResponse> getProductService(@PathVariable Long id) {
         log.debug("REST request to get ProductService : {}", id);
-        Optional<ProductServiceDTO> productServiceDTO = productServiceService.findOne(id);
-        return ResponseUtil.wrapOrNotFound(productServiceDTO.map(BaseResponse::new));
+        Optional<ProductOfferingServiceDTO> productOfferingServiceDTO = productOfferingServiceService.findOne(id);
+        return ResponseUtil.wrapOrNotFound(productOfferingServiceDTO.map(BaseResponse::new));
     }
 
     /**
@@ -129,7 +129,7 @@ public class ProductServiceResource {
     @DeleteMapping("/product-services/{id}")
     public ResponseEntity<Void> deleteProductService(@PathVariable Long id) {
         log.debug("REST request to delete ProductService : {}", id);
-        productServiceService.delete(id);
+        productOfferingServiceService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString())).build();
     }
 }

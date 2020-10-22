@@ -4,14 +4,14 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 import com.dreamfolkstech.appconfig.web.rest.TestUtil;
 
-public class ProductServiceTest {
+public class ProductOfferingServiceTest {
 
     @Test
     public void equalsVerifier() throws Exception {
-        TestUtil.equalsVerifier(ProductService.class);
-        ProductService productService1 = new ProductService();
+        TestUtil.equalsVerifier(ProductOfferingService.class);
+        ProductOfferingService productService1 = new ProductOfferingService();
         productService1.setId(1L);
-        ProductService productService2 = new ProductService();
+        ProductOfferingService productService2 = new ProductOfferingService();
         productService2.setId(productService1.getId());
         assertThat(productService1).isEqualTo(productService2);
         productService2.setId(2L);

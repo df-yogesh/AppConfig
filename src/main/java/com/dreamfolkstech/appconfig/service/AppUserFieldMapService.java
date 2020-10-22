@@ -1,11 +1,14 @@
 package com.dreamfolkstech.appconfig.service;
 
-import com.dreamfolkstech.appconfig.service.dto.AppUserFieldMapDTO;
+import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import java.util.Optional;
+import com.dreamfolkstech.appconfig.domain.AppUserFieldMap;
+import com.dreamfolkstech.appconfig.service.dto.AppUserFieldMapDTO;
+import com.dreamfolkstech.common.errors.ExternalBaseResponse;
 
 /**
  * Service Interface for managing {@link com.dreamfolkstech.appconfig.domain.AppUserFieldMap}.
@@ -43,4 +46,10 @@ public interface AppUserFieldMapService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+	/**find user registration fields by app code
+	 * @param code
+	 * @return
+	 */
+	ExternalBaseResponse findAllByCode(String code);
 }

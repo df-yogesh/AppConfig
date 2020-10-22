@@ -27,14 +27,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.dreamfolkstech.appconfig.AppConfigApp;
 import com.dreamfolkstech.appconfig.config.SecurityBeanOverrideConfiguration;
-import com.dreamfolkstech.appconfig.domain.ProductService;
-import com.dreamfolkstech.appconfig.repository.ProductServiceRepository;
-import com.dreamfolkstech.appconfig.service.ProductServiceService;
-import com.dreamfolkstech.appconfig.service.dto.ProductServiceDTO;
-import com.dreamfolkstech.appconfig.service.mapper.ProductServiceMapper;
+import com.dreamfolkstech.appconfig.domain.ProductOfferingService;
+import com.dreamfolkstech.appconfig.repository.ProductOfferingServiceRepository;
+import com.dreamfolkstech.appconfig.service.ProductOfferingServiceService;
+import com.dreamfolkstech.appconfig.service.dto.ProductOfferingServiceDTO;
+import com.dreamfolkstech.appconfig.service.mapper.ProductOfferingServiceMapper;
 import com.dreamfolkstech.common.domain.enumeration.GenericStatus;
 /**
- * Integration tests for the {@link ProductServiceResource} REST controller.
+ * Integration tests for the {@link ProductOfferingServiceResource} REST controller.
  */
 @SpringBootTest(classes = { SecurityBeanOverrideConfiguration.class, AppConfigApp.class })
 @AutoConfigureMockMvc
@@ -54,13 +54,13 @@ public class ProductServiceResourceIT {
     private static final GenericStatus UPDATED_STATUS = GenericStatus.DISABLED;
 
     @Autowired
-    private ProductServiceRepository productServiceRepository;
+    private ProductOfferingServiceRepository productOfferingServiceRepository;
 
     @Autowired
-    private ProductServiceMapper productServiceMapper;
+    private ProductOfferingServiceMapper productOfferingServiceMapper;
 
     @Autowired
-    private ProductServiceService productServiceService;
+    private ProductOfferingServiceService productOfferingServiceService;
 
     @Autowired
     private EntityManager em;
@@ -68,7 +68,7 @@ public class ProductServiceResourceIT {
     @Autowired
     private MockMvc restProductServiceMockMvc;
 
-    private ProductService productService;
+    private ProductOfferingService productOfferingService;
 
     /**
      * Create an entity for this test.
@@ -76,13 +76,13 @@ public class ProductServiceResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static ProductService createEntity(EntityManager em) {
-        ProductService productService = new ProductService()
+    public static ProductOfferingService createEntity(EntityManager em) {
+        ProductOfferingService productOfferingService = new ProductOfferingService()
             .name(DEFAULT_NAME)
             .code(DEFAULT_CODE)
             .description(DEFAULT_DESCRIPTION)
             .status(DEFAULT_STATUS);
-        return productService;
+        return productOfferingService;
     }
     /**
      * Create an updated entity for this test.
@@ -90,35 +90,35 @@ public class ProductServiceResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static ProductService createUpdatedEntity(EntityManager em) {
-        ProductService productService = new ProductService()
+    public static ProductOfferingService createUpdatedEntity(EntityManager em) {
+        ProductOfferingService productOfferingService = new ProductOfferingService()
             .name(UPDATED_NAME)
             .code(UPDATED_CODE)
             .description(UPDATED_DESCRIPTION)
             .status(UPDATED_STATUS);
-        return productService;
+        return productOfferingService;
     }
 
     @BeforeEach
     public void initTest() {
-        productService = createEntity(em);
+        productOfferingService = createEntity(em);
     }
 
     @Test
     @Transactional
     public void createProductService() throws Exception {
-        int databaseSizeBeforeCreate = productServiceRepository.findAll().size();
+        int databaseSizeBeforeCreate = productOfferingServiceRepository.findAll().size();
         // Create the ProductService
-        ProductServiceDTO productServiceDTO = productServiceMapper.toDto(productService);
+        ProductOfferingServiceDTO productOfferingServiceDTO = productOfferingServiceMapper.toDto(productOfferingService);
         restProductServiceMockMvc.perform(post("/api/product-services").with(csrf())
             .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(productServiceDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(productOfferingServiceDTO)))
             .andExpect(status().isCreated());
 
         // Validate the ProductService in the database
-        List<ProductService> productServiceList = productServiceRepository.findAll();
+        List<ProductOfferingService> productServiceList = productOfferingServiceRepository.findAll();
         assertThat(productServiceList).hasSize(databaseSizeBeforeCreate + 1);
-        ProductService testProductService = productServiceList.get(productServiceList.size() - 1);
+        ProductOfferingService testProductService = productServiceList.get(productServiceList.size() - 1);
         assertThat(testProductService.getName()).isEqualTo(DEFAULT_NAME);
         assertThat(testProductService.getCode()).isEqualTo(DEFAULT_CODE);
         assertThat(testProductService.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
@@ -128,20 +128,20 @@ public class ProductServiceResourceIT {
     @Test
     @Transactional
     public void createProductServiceWithExistingId() throws Exception {
-        int databaseSizeBeforeCreate = productServiceRepository.findAll().size();
+        int databaseSizeBeforeCreate = productOfferingServiceRepository.findAll().size();
 
         // Create the ProductService with an existing ID
-        productService.setId(1L);
-        ProductServiceDTO productServiceDTO = productServiceMapper.toDto(productService);
+        productOfferingService.setId(1L);
+        ProductOfferingServiceDTO productOfferingServiceDTO = productOfferingServiceMapper.toDto(productOfferingService);
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restProductServiceMockMvc.perform(post("/api/product-services").with(csrf())
             .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(productServiceDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(productOfferingServiceDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the ProductService in the database
-        List<ProductService> productServiceList = productServiceRepository.findAll();
+        List<ProductOfferingService> productServiceList = productOfferingServiceRepository.findAll();
         assertThat(productServiceList).hasSize(databaseSizeBeforeCreate);
     }
 
@@ -149,40 +149,40 @@ public class ProductServiceResourceIT {
     @Test
     @Transactional
     public void checkNameIsRequired() throws Exception {
-        int databaseSizeBeforeTest = productServiceRepository.findAll().size();
+        int databaseSizeBeforeTest = productOfferingServiceRepository.findAll().size();
         // set the field null
-        productService.setName(null);
+        productOfferingService.setName(null);
 
         // Create the ProductService, which fails.
-        ProductServiceDTO productServiceDTO = productServiceMapper.toDto(productService);
+        ProductOfferingServiceDTO productOfferingServiceDTO = productOfferingServiceMapper.toDto(productOfferingService);
 
 
         restProductServiceMockMvc.perform(post("/api/product-services").with(csrf())
             .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(productServiceDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(productOfferingServiceDTO)))
             .andExpect(status().isBadRequest());
 
-        List<ProductService> productServiceList = productServiceRepository.findAll();
+        List<ProductOfferingService> productServiceList = productOfferingServiceRepository.findAll();
         assertThat(productServiceList).hasSize(databaseSizeBeforeTest);
     }
 
     @Test
     @Transactional
     public void checkCodeIsRequired() throws Exception {
-        int databaseSizeBeforeTest = productServiceRepository.findAll().size();
+        int databaseSizeBeforeTest = productOfferingServiceRepository.findAll().size();
         // set the field null
-        productService.setCode(null);
+        productOfferingService.setCode(null);
 
         // Create the ProductService, which fails.
-        ProductServiceDTO productServiceDTO = productServiceMapper.toDto(productService);
+        ProductOfferingServiceDTO productOfferingServiceDTO = productOfferingServiceMapper.toDto(productOfferingService);
 
 
         restProductServiceMockMvc.perform(post("/api/product-services").with(csrf())
             .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(productServiceDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(productOfferingServiceDTO)))
             .andExpect(status().isBadRequest());
 
-        List<ProductService> productServiceList = productServiceRepository.findAll();
+        List<ProductOfferingService> productServiceList = productOfferingServiceRepository.findAll();
         assertThat(productServiceList).hasSize(databaseSizeBeforeTest);
     }
 
@@ -190,13 +190,13 @@ public class ProductServiceResourceIT {
     @Transactional
     public void getAllProductServices() throws Exception {
         // Initialize the database
-        productServiceRepository.saveAndFlush(productService);
+        productOfferingServiceRepository.saveAndFlush(productOfferingService);
 
         // Get all the productServiceList
         restProductServiceMockMvc.perform(get("/api/product-services?sort=id,desc"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(productService.getId().intValue())))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(productOfferingService.getId().intValue())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
             .andExpect(jsonPath("$.[*].code").value(hasItem(DEFAULT_CODE)))
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
@@ -207,13 +207,13 @@ public class ProductServiceResourceIT {
     @Transactional
     public void getProductService() throws Exception {
         // Initialize the database
-        productServiceRepository.saveAndFlush(productService);
+        productOfferingServiceRepository.saveAndFlush(productOfferingService);
 
         // Get the productService
-        restProductServiceMockMvc.perform(get("/api/product-services/{id}", productService.getId()))
+        restProductServiceMockMvc.perform(get("/api/product-services/{id}", productOfferingService.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$.id").value(productService.getId().intValue()))
+            .andExpect(jsonPath("$.id").value(productOfferingService.getId().intValue()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
             .andExpect(jsonPath("$.code").value(DEFAULT_CODE))
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION))
@@ -231,12 +231,12 @@ public class ProductServiceResourceIT {
     @Transactional
     public void updateProductService() throws Exception {
         // Initialize the database
-        productServiceRepository.saveAndFlush(productService);
+        productOfferingServiceRepository.saveAndFlush(productOfferingService);
 
-        int databaseSizeBeforeUpdate = productServiceRepository.findAll().size();
+        int databaseSizeBeforeUpdate = productOfferingServiceRepository.findAll().size();
 
         // Update the productService
-        ProductService updatedProductService = productServiceRepository.findById(productService.getId()).get();
+        ProductOfferingService updatedProductService = productOfferingServiceRepository.findById(productOfferingService.getId()).get();
         // Disconnect from session so that the updates on updatedProductService are not directly saved in db
         em.detach(updatedProductService);
         updatedProductService
@@ -244,17 +244,17 @@ public class ProductServiceResourceIT {
             .code(UPDATED_CODE)
             .description(UPDATED_DESCRIPTION)
             .status(UPDATED_STATUS);
-        ProductServiceDTO productServiceDTO = productServiceMapper.toDto(updatedProductService);
+        ProductOfferingServiceDTO productOfferingServiceDTO = productOfferingServiceMapper.toDto(updatedProductService);
 
         restProductServiceMockMvc.perform(put("/api/product-services").with(csrf())
             .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(productServiceDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(productOfferingServiceDTO)))
             .andExpect(status().isOk());
 
         // Validate the ProductService in the database
-        List<ProductService> productServiceList = productServiceRepository.findAll();
+        List<ProductOfferingService> productServiceList = productOfferingServiceRepository.findAll();
         assertThat(productServiceList).hasSize(databaseSizeBeforeUpdate);
-        ProductService testProductService = productServiceList.get(productServiceList.size() - 1);
+        ProductOfferingService testProductService = productServiceList.get(productServiceList.size() - 1);
         assertThat(testProductService.getName()).isEqualTo(UPDATED_NAME);
         assertThat(testProductService.getCode()).isEqualTo(UPDATED_CODE);
         assertThat(testProductService.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
@@ -264,19 +264,19 @@ public class ProductServiceResourceIT {
     @Test
     @Transactional
     public void updateNonExistingProductService() throws Exception {
-        int databaseSizeBeforeUpdate = productServiceRepository.findAll().size();
+        int databaseSizeBeforeUpdate = productOfferingServiceRepository.findAll().size();
 
         // Create the ProductService
-        ProductServiceDTO productServiceDTO = productServiceMapper.toDto(productService);
+        ProductOfferingServiceDTO productOfferingServiceDTO = productOfferingServiceMapper.toDto(productOfferingService);
 
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restProductServiceMockMvc.perform(put("/api/product-services").with(csrf())
             .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(productServiceDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(productOfferingServiceDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the ProductService in the database
-        List<ProductService> productServiceList = productServiceRepository.findAll();
+        List<ProductOfferingService> productServiceList = productOfferingServiceRepository.findAll();
         assertThat(productServiceList).hasSize(databaseSizeBeforeUpdate);
     }
 
@@ -284,17 +284,17 @@ public class ProductServiceResourceIT {
     @Transactional
     public void deleteProductService() throws Exception {
         // Initialize the database
-        productServiceRepository.saveAndFlush(productService);
+        productOfferingServiceRepository.saveAndFlush(productOfferingService);
 
-        int databaseSizeBeforeDelete = productServiceRepository.findAll().size();
+        int databaseSizeBeforeDelete = productOfferingServiceRepository.findAll().size();
 
         // Delete the productService
-        restProductServiceMockMvc.perform(delete("/api/product-services/{id}", productService.getId()).with(csrf())
+        restProductServiceMockMvc.perform(delete("/api/product-services/{id}", productOfferingService.getId()).with(csrf())
             .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isNoContent());
 
         // Validate the database contains one less item
-        List<ProductService> productServiceList = productServiceRepository.findAll();
+        List<ProductOfferingService> productServiceList = productOfferingServiceRepository.findAll();
         assertThat(productServiceList).hasSize(databaseSizeBeforeDelete - 1);
     }
 }

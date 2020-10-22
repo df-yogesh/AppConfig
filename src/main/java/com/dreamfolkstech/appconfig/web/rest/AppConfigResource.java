@@ -19,7 +19,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -28,6 +30,7 @@ import com.dreamfolkstech.appconfig.service.dto.AppConfigDTO;
 import com.dreamfolkstech.appconfig.web.rest.errors.ErrorConstants;
 import com.dreamfolkstech.common.dto.BaseResponse;
 import com.dreamfolkstech.common.errors.CustomException;
+import com.dreamfolkstech.common.errors.ExternalBaseResponse;
 
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.PaginationUtil;
@@ -132,4 +135,17 @@ public class AppConfigResource {
         appConfigService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString())).build();
     }
+    
+   	/**{@code GET /app-configs/all/bycode/{code}} : Api to get all enabled appConfigs by appcode and time
+   	 * @param di deviceInfo
+   	 * @param requestTime
+   	 * @return
+   	 */
+   	@GetMapping("/app-configs/all/bycode/{code}")
+   	public ResponseEntity<ExternalBaseResponse> getAppProductServiceByProductCode(@RequestHeader("di") Optional<String> deviceInfo,
+   			@PathVariable String code,@RequestParam Optional<Long> requestTime) {
+   		log.debug("REST request to get App Product Service By app Code");
+   		ExternalBaseResponse externalBaseResponse = appConfigService.findAllByProductCode(code,requestTime,deviceInfo);
+   		return ResponseEntity.ok().body(externalBaseResponse);
+   	}
 }

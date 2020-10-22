@@ -22,8 +22,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.dreamfolkstech.appconfig.service.AppProductServiceService;
-import com.dreamfolkstech.appconfig.service.dto.AppProductServiceDTO;
+import com.dreamfolkstech.appconfig.service.AppProductOfferingServiceService;
+import com.dreamfolkstech.appconfig.service.dto.AppProductOfferingServiceDTO;
 import com.dreamfolkstech.appconfig.web.rest.errors.ErrorConstants;
 import com.dreamfolkstech.common.dto.BaseResponse;
 import com.dreamfolkstech.common.errors.CustomException;
@@ -35,42 +35,42 @@ import io.github.jhipster.web.util.ResponseUtil;
 
 /**
  * REST controller for managing
- * {@link com.dreamfolkstech.appconfig.domain.AppProductService}.
+ * {@link com.dreamfolkstech.appconfig.domain.AppProductOfferingService}.
  */
 @RestController
 @RequestMapping("/api")
-public class AppProductServiceResource {
+public class AppProductOfferingServiceResource {
 
-	private final Logger log = LoggerFactory.getLogger(AppProductServiceResource.class);
+	private final Logger log = LoggerFactory.getLogger(AppProductOfferingServiceResource.class);
 
 	private static final String ENTITY_NAME = "AppProductService";
 
 	@Value("${jhipster.clientApp.name}")
 	private String applicationName;
 
-	private final AppProductServiceService appProductServiceService;
+	private final AppProductOfferingServiceService appProductOfferingServiceService;
 
-	public AppProductServiceResource(AppProductServiceService appProductServiceService) {
-		this.appProductServiceService = appProductServiceService;
+	public AppProductOfferingServiceResource(AppProductOfferingServiceService appProductOfferingServiceService) {
+		this.appProductOfferingServiceService = appProductOfferingServiceService;
 	}
 
 	/**
 	 * {@code POST  /app-product-services} : Create a new appProductService.
 	 *
-	 * @param appProductServiceDTO the appProductServiceDTO to create.
+	 * @param appProductOfferingServiceDTO the appProductServiceDTO to create.
 	 * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with
 	 *         body the new appProductServiceDTO, or with status
 	 *         {@code 400 (Bad Request)} if the appProductService has already an ID.
 	 * @throws URISyntaxException if the Location URI syntax is incorrect.
 	 */
 	@PostMapping("/app-product-services")
-	public ResponseEntity<BaseResponse> createAppProductService(@RequestBody AppProductServiceDTO appProductServiceDTO)
+	public ResponseEntity<BaseResponse> createAppProductService(@RequestBody AppProductOfferingServiceDTO appProductOfferingServiceDTO)
 			throws URISyntaxException {
-		log.debug("REST request to save AppProductService : {}", appProductServiceDTO);
-		if (appProductServiceDTO.getId() != null) {
+		log.debug("REST request to save AppProductService : {}", appProductOfferingServiceDTO);
+		if (appProductOfferingServiceDTO.getId() != null) {
 			throw new CustomException(ErrorConstants.ENTITY_CREATE_ID_ERROR, ENTITY_NAME);
 		}
-		AppProductServiceDTO result = appProductServiceService.save(appProductServiceDTO);
+		AppProductOfferingServiceDTO result = appProductOfferingServiceService.save(appProductOfferingServiceDTO);
 		return ResponseEntity
 				.created(new URI("/api/app-product-services/" + result.getId())).headers(HeaderUtil
 						.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
@@ -80,7 +80,7 @@ public class AppProductServiceResource {
 	/**
 	 * {@code PUT  /app-product-services} : Updates an existing appProductService.
 	 *
-	 * @param appProductServiceDTO the appProductServiceDTO to update.
+	 * @param appProductOfferingServiceDTO the appProductServiceDTO to update.
 	 * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body
 	 *         the updated appProductServiceDTO, or with status
 	 *         {@code 400 (Bad Request)} if the appProductServiceDTO is not valid,
@@ -89,15 +89,15 @@ public class AppProductServiceResource {
 	 * @throws URISyntaxException if the Location URI syntax is incorrect.
 	 */
 	@PutMapping("/app-product-services")
-	public ResponseEntity<BaseResponse> updateAppProductService(@RequestBody AppProductServiceDTO appProductServiceDTO)
+	public ResponseEntity<BaseResponse> updateAppProductService(@RequestBody AppProductOfferingServiceDTO appProductOfferingServiceDTO)
 			throws URISyntaxException {
-		log.debug("REST request to update AppProductService : {}", appProductServiceDTO);
-		if (appProductServiceDTO.getId() == null) {
+		log.debug("REST request to update AppProductService : {}", appProductOfferingServiceDTO);
+		if (appProductOfferingServiceDTO.getId() == null) {
 			throw new CustomException(ErrorConstants.ENTITY_FETCH_MISSING_ID_ERROR, ENTITY_NAME);
 		}
-		AppProductServiceDTO result = appProductServiceService.save(appProductServiceDTO);
+		AppProductOfferingServiceDTO result = appProductOfferingServiceService.save(appProductOfferingServiceDTO);
 		return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME,
-				appProductServiceDTO.getId().toString())).body(new BaseResponse(result));
+				appProductOfferingServiceDTO.getId().toString())).body(new BaseResponse(result));
 	}
 
 	/**
@@ -110,7 +110,7 @@ public class AppProductServiceResource {
 	@GetMapping("/app-product-services")
 	public ResponseEntity<BaseResponse> getAllAppProductServices(Pageable pageable) {
 		log.debug("REST request to get a page of AppProductServices");
-		Page<AppProductServiceDTO> page = appProductServiceService.findAll(pageable);
+		Page<AppProductOfferingServiceDTO> page = appProductOfferingServiceService.findAll(pageable);
 		HttpHeaders headers = PaginationUtil
 				.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
 		return ResponseEntity.ok().headers(headers).body(new BaseResponse(page.getContent()));
@@ -126,8 +126,8 @@ public class AppProductServiceResource {
 	@GetMapping("/app-product-services/{id}")
 	public ResponseEntity<BaseResponse> getAppProductService(@PathVariable Long id) {
 		log.debug("REST request to get AppProductService : {}", id);
-		Optional<AppProductServiceDTO> appProductServiceDTO = appProductServiceService.findOne(id);
-		return ResponseUtil.wrapOrNotFound(appProductServiceDTO.map(BaseResponse::new));
+		Optional<AppProductOfferingServiceDTO> appProductOfferingServiceDTO = appProductOfferingServiceService.findOne(id);
+		return ResponseUtil.wrapOrNotFound(appProductOfferingServiceDTO.map(BaseResponse::new));
 	}
 
 	/**
@@ -140,22 +140,10 @@ public class AppProductServiceResource {
 	@DeleteMapping("/app-product-services/{id}")
 	public ResponseEntity<Void> deleteAppProductService(@PathVariable Long id) {
 		log.debug("REST request to delete AppProductService : {}", id);
-		appProductServiceService.delete(id);
+		appProductOfferingServiceService.delete(id);
 		return ResponseEntity.noContent()
 				.headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))
 				.build();
 	}
-
-	/**
-	 * {@code GET /app-product-services/{code}} : Api to get all product service by
-	 * product code
-	 * @param id
-	 * @return
-	 */
-	@GetMapping("/app-product-services/code/{code}")
-	public ResponseEntity<ExternalBaseResponse> getAppProductServiceByProductCode(@PathVariable String code) {
-		log.debug("REST request to get App Product Service By ProductId: {}", code);
-		ExternalBaseResponse externalBaseResponse = appProductServiceService.findAllByProductCode(code);
-		return ResponseEntity.ok().body(externalBaseResponse);
-	}
+	
 }

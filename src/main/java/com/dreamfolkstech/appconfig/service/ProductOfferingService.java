@@ -1,6 +1,9 @@
 package com.dreamfolkstech.appconfig.service;
 
 import com.dreamfolkstech.appconfig.service.dto.ProductOfferingDTO;
+import com.dreamfolkstech.appconfig.service.util.UtilityFunctions;
+import com.dreamfolkstech.appconfig.web.rest.errors.ErrorConstants;
+import com.dreamfolkstech.common.errors.ExternalBaseResponse;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -43,4 +46,10 @@ public interface ProductOfferingService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+    
+    /**
+	 * @param code
+	 * @return
+	 */
+	ExternalBaseResponse findAllByAppCode(String code);
 }

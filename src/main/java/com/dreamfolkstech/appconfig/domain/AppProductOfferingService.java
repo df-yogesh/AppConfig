@@ -17,42 +17,42 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  * A AppProductService.
  */
 @Entity
-@Table(name = "app_product_service")
-public class AppProductService extends AbstractBaseExtensibleEntity<Long> implements Serializable {
+@Table(name = "app_product_offering_service")
+public class AppProductOfferingService extends AbstractBaseExtensibleEntity<Long> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Column(name = "product_service_id")
-    private Integer productServiceId;
+    @Column(name = "product_offering_service_id")
+    private Integer productOfferingServiceId;
 
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "status")
     private GenericStatus status;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = "appProductServices", allowSetters = true)
+    @JsonIgnoreProperties(value = "appProductOfferingServices", allowSetters = true)
     private Application application;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
-    public Integer getProductServiceId() {
-        return productServiceId;
+    public Integer getProductOfferingServiceId() {
+        return productOfferingServiceId;
     }
 
-    public AppProductService productServiceId(Integer productServiceId) {
-        this.productServiceId = productServiceId;
+    public AppProductOfferingService productOfferingServiceId(Integer productOfferingServiceId) {
+        this.productOfferingServiceId = productOfferingServiceId;
         return this;
     }
 
-    public void setProductServiceId(Integer productServiceId) {
-        this.productServiceId = productServiceId;
+    public void setProductOfferingServiceId(Integer productOfferingServiceId) {
+        this.productOfferingServiceId = productOfferingServiceId;
     }
 
     public GenericStatus getStatus() {
         return status;
     }
 
-    public AppProductService status(GenericStatus status) {
+    public AppProductOfferingService status(GenericStatus status) {
         this.status = status;
         return this;
     }
@@ -65,7 +65,7 @@ public class AppProductService extends AbstractBaseExtensibleEntity<Long> implem
         return application;
     }
 
-    public AppProductService application(Application application) {
+    public AppProductOfferingService application(Application application) {
         this.application = application;
         return this;
     }
@@ -80,10 +80,10 @@ public class AppProductService extends AbstractBaseExtensibleEntity<Long> implem
         if (this == o) {
             return true;
         }
-        if (!(o instanceof AppProductService)) {
+        if (!(o instanceof AppProductOfferingService)) {
             return false;
         }
-        return this.getId() != null && this.getId().equals(((AppProductService) o).getId());
+        return this.getId() != null && this.getId().equals(((AppProductOfferingService) o).getId());
     }
 
     @Override
@@ -94,9 +94,9 @@ public class AppProductService extends AbstractBaseExtensibleEntity<Long> implem
     // prettier-ignore
     @Override
     public String toString() {
-        return "AppProductService{" +
+        return "AppProductOfferingService{" +
             "id=" + getId() +
-            ", productServiceId=" + getProductServiceId() +
+            ", productServiceId=" + getProductOfferingServiceId() +
             ", status='" + getStatus() + "'" +
             "}";
     }

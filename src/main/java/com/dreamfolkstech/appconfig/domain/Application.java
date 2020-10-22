@@ -48,7 +48,7 @@ public class Application extends AbstractBaseExtensibleEntity<Long> implements S
     private GenericStatus status;
 
     @OneToMany(mappedBy = "application")
-    private Set<AppProductService> appProductServices = new HashSet<>();
+    private Set<AppProductOfferingService> appProductOfferingServices = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public String getName() {
@@ -116,29 +116,29 @@ public class Application extends AbstractBaseExtensibleEntity<Long> implements S
         this.status = status;
     }
 
-    public Set<AppProductService> getAppProductServices() {
-        return appProductServices;
+    public Set<AppProductOfferingService> getAppProductServices() {
+        return appProductOfferingServices;
     }
 
-    public Application appProductServices(Set<AppProductService> appProductServices) {
-        this.appProductServices = appProductServices;
+    public Application appProductOfferingServices(Set<AppProductOfferingService> appProductOfferingServices) {
+        this.appProductOfferingServices = appProductOfferingServices;
         return this;
     }
 
-    public Application addAppProductService(AppProductService appProductService) {
-        this.appProductServices.add(appProductService);
-        appProductService.setApplication(this);
+    public Application addAppProductService(AppProductOfferingService appProductOfferingService) {
+        this.appProductOfferingServices.add(appProductOfferingService);
+        appProductOfferingService.setApplication(this);
         return this;
     }
 
-    public Application removeAppProductService(AppProductService appProductService) {
-        this.appProductServices.remove(appProductService);
-        appProductService.setApplication(null);
+    public Application removeAppProductService(AppProductOfferingService appProductOfferingService) {
+        this.appProductOfferingServices.remove(appProductOfferingService);
+        appProductOfferingService.setApplication(null);
         return this;
     }
 
-    public void setAppProductServices(Set<AppProductService> appProductServices) {
-        this.appProductServices = appProductServices;
+    public void setAppProductServices(Set<AppProductOfferingService> appProductOfferingServices) {
+        this.appProductOfferingServices = appProductOfferingServices;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 

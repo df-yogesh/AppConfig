@@ -27,19 +27,19 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.dreamfolkstech.appconfig.AppConfigApp;
 import com.dreamfolkstech.appconfig.config.SecurityBeanOverrideConfiguration;
-import com.dreamfolkstech.appconfig.domain.AppProductService;
-import com.dreamfolkstech.appconfig.repository.AppProductServiceRepository;
-import com.dreamfolkstech.appconfig.service.AppProductServiceService;
-import com.dreamfolkstech.appconfig.service.dto.AppProductServiceDTO;
-import com.dreamfolkstech.appconfig.service.mapper.AppProductServiceMapper;
+import com.dreamfolkstech.appconfig.domain.AppProductOfferingService;
+import com.dreamfolkstech.appconfig.repository.AppProductOfferingServiceRepository;
+import com.dreamfolkstech.appconfig.service.AppProductOfferingServiceService;
+import com.dreamfolkstech.appconfig.service.dto.AppProductOfferingServiceDTO;
+import com.dreamfolkstech.appconfig.service.mapper.AppProductOfferingServiceMapper;
 import com.dreamfolkstech.common.domain.enumeration.GenericStatus;
 /**
- * Integration tests for the {@link AppProductServiceResource} REST controller.
+ * Integration tests for the {@link AppProductOfferingServiceResource} REST controller.
  */
 @SpringBootTest(classes = { SecurityBeanOverrideConfiguration.class, AppConfigApp.class })
 @AutoConfigureMockMvc
 @WithMockUser
-public class AppProductServiceResourceIT {
+public class AppProductOfferingServiceResourceIT {
 
     private static final Integer DEFAULT_PRODUCT_SERVICE_ID = 1;
     private static final Integer UPDATED_PRODUCT_SERVICE_ID = 2;
@@ -48,13 +48,13 @@ public class AppProductServiceResourceIT {
     private static final GenericStatus UPDATED_STATUS = GenericStatus.DISABLED;
 
     @Autowired
-    private AppProductServiceRepository appProductServiceRepository;
+    private AppProductOfferingServiceRepository appProductOfferingServiceRepository;
 
     @Autowired
-    private AppProductServiceMapper appProductServiceMapper;
+    private AppProductOfferingServiceMapper appProductOfferingServiceMapper;
 
     @Autowired
-    private AppProductServiceService appProductServiceService;
+    private AppProductOfferingServiceService appProductOfferingServiceService;
 
     @Autowired
     private EntityManager em;
@@ -62,7 +62,7 @@ public class AppProductServiceResourceIT {
     @Autowired
     private MockMvc restAppProductServiceMockMvc;
 
-    private AppProductService appProductService;
+    private AppProductOfferingService appProductOfferingService;
 
     /**
      * Create an entity for this test.
@@ -70,11 +70,11 @@ public class AppProductServiceResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static AppProductService createEntity(EntityManager em) {
-        AppProductService appProductService = new AppProductService()
-            .productServiceId(DEFAULT_PRODUCT_SERVICE_ID)
+    public static AppProductOfferingService createEntity(EntityManager em) {
+        AppProductOfferingService appProductOfferingService = new AppProductOfferingService()
+            .productOfferingServiceId(DEFAULT_PRODUCT_SERVICE_ID)
             .status(DEFAULT_STATUS);
-        return appProductService;
+        return appProductOfferingService;
     }
     /**
      * Create an updated entity for this test.
@@ -82,54 +82,54 @@ public class AppProductServiceResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static AppProductService createUpdatedEntity(EntityManager em) {
-        AppProductService appProductService = new AppProductService()
-            .productServiceId(UPDATED_PRODUCT_SERVICE_ID)
+    public static AppProductOfferingService createUpdatedEntity(EntityManager em) {
+        AppProductOfferingService appProductOfferingService = new AppProductOfferingService()
+            .productOfferingServiceId(UPDATED_PRODUCT_SERVICE_ID)
             .status(UPDATED_STATUS);
-        return appProductService;
+        return appProductOfferingService;
     }
 
     @BeforeEach
     public void initTest() {
-        appProductService = createEntity(em);
+        appProductOfferingService = createEntity(em);
     }
 
     @Test
     @Transactional
     public void createAppProductService() throws Exception {
-        int databaseSizeBeforeCreate = appProductServiceRepository.findAll().size();
+        int databaseSizeBeforeCreate = appProductOfferingServiceRepository.findAll().size();
         // Create the AppProductService
-        AppProductServiceDTO appProductServiceDTO = appProductServiceMapper.toDto(appProductService);
+        AppProductOfferingServiceDTO appProductOfferingServiceDTO = appProductOfferingServiceMapper.toDto(appProductOfferingService);
         restAppProductServiceMockMvc.perform(post("/api/app-product-services").with(csrf())
             .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(appProductServiceDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(appProductOfferingServiceDTO)))
             .andExpect(status().isCreated());
 
         // Validate the AppProductService in the database
-        List<AppProductService> appProductServiceList = appProductServiceRepository.findAll();
+        List<AppProductOfferingService> appProductServiceList = appProductOfferingServiceRepository.findAll();
         assertThat(appProductServiceList).hasSize(databaseSizeBeforeCreate + 1);
-        AppProductService testAppProductService = appProductServiceList.get(appProductServiceList.size() - 1);
-        assertThat(testAppProductService.getProductServiceId()).isEqualTo(DEFAULT_PRODUCT_SERVICE_ID);
+        AppProductOfferingService testAppProductService = appProductServiceList.get(appProductServiceList.size() - 1);
+        assertThat(testAppProductService.getProductOfferingServiceId()).isEqualTo(DEFAULT_PRODUCT_SERVICE_ID);
         assertThat(testAppProductService.getStatus()).isEqualTo(DEFAULT_STATUS);
     }
 
     @Test
     @Transactional
     public void createAppProductServiceWithExistingId() throws Exception {
-        int databaseSizeBeforeCreate = appProductServiceRepository.findAll().size();
+        int databaseSizeBeforeCreate = appProductOfferingServiceRepository.findAll().size();
 
         // Create the AppProductService with an existing ID
-        appProductService.setId(1L);
-        AppProductServiceDTO appProductServiceDTO = appProductServiceMapper.toDto(appProductService);
+        appProductOfferingService.setId(1L);
+        AppProductOfferingServiceDTO appProductOfferingServiceDTO = appProductOfferingServiceMapper.toDto(appProductOfferingService);
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restAppProductServiceMockMvc.perform(post("/api/app-product-services").with(csrf())
             .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(appProductServiceDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(appProductOfferingServiceDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the AppProductService in the database
-        List<AppProductService> appProductServiceList = appProductServiceRepository.findAll();
+        List<AppProductOfferingService> appProductServiceList = appProductOfferingServiceRepository.findAll();
         assertThat(appProductServiceList).hasSize(databaseSizeBeforeCreate);
     }
 
@@ -138,13 +138,13 @@ public class AppProductServiceResourceIT {
     @Transactional
     public void getAllAppProductServices() throws Exception {
         // Initialize the database
-        appProductServiceRepository.saveAndFlush(appProductService);
+        appProductOfferingServiceRepository.saveAndFlush(appProductOfferingService);
 
         // Get all the appProductServiceList
         restAppProductServiceMockMvc.perform(get("/api/app-product-services?sort=id,desc"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(appProductService.getId().intValue())))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(appProductOfferingService.getId().intValue())))
             .andExpect(jsonPath("$.[*].productServiceId").value(hasItem(DEFAULT_PRODUCT_SERVICE_ID)))
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())));
     }
@@ -153,13 +153,13 @@ public class AppProductServiceResourceIT {
     @Transactional
     public void getAppProductService() throws Exception {
         // Initialize the database
-        appProductServiceRepository.saveAndFlush(appProductService);
+        appProductOfferingServiceRepository.saveAndFlush(appProductOfferingService);
 
         // Get the appProductService
-        restAppProductServiceMockMvc.perform(get("/api/app-product-services/{id}", appProductService.getId()))
+        restAppProductServiceMockMvc.perform(get("/api/app-product-services/{id}", appProductOfferingService.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$.id").value(appProductService.getId().intValue()))
+            .andExpect(jsonPath("$.id").value(appProductOfferingService.getId().intValue()))
             .andExpect(jsonPath("$.productServiceId").value(DEFAULT_PRODUCT_SERVICE_ID))
             .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()));
     }
@@ -175,48 +175,48 @@ public class AppProductServiceResourceIT {
     @Transactional
     public void updateAppProductService() throws Exception {
         // Initialize the database
-        appProductServiceRepository.saveAndFlush(appProductService);
+        appProductOfferingServiceRepository.saveAndFlush(appProductOfferingService);
 
-        int databaseSizeBeforeUpdate = appProductServiceRepository.findAll().size();
+        int databaseSizeBeforeUpdate = appProductOfferingServiceRepository.findAll().size();
 
         // Update the appProductService
-        AppProductService updatedAppProductService = appProductServiceRepository.findById(appProductService.getId()).get();
+        AppProductOfferingService updatedAppProductService = appProductOfferingServiceRepository.findById(appProductOfferingService.getId()).get();
         // Disconnect from session so that the updates on updatedAppProductService are not directly saved in db
         em.detach(updatedAppProductService);
         updatedAppProductService
-            .productServiceId(UPDATED_PRODUCT_SERVICE_ID)
+            .productOfferingServiceId(UPDATED_PRODUCT_SERVICE_ID)
             .status(UPDATED_STATUS);
-        AppProductServiceDTO appProductServiceDTO = appProductServiceMapper.toDto(updatedAppProductService);
+        AppProductOfferingServiceDTO appProductOfferingServiceDTO = appProductOfferingServiceMapper.toDto(updatedAppProductService);
 
         restAppProductServiceMockMvc.perform(put("/api/app-product-services").with(csrf())
             .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(appProductServiceDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(appProductOfferingServiceDTO)))
             .andExpect(status().isOk());
 
         // Validate the AppProductService in the database
-        List<AppProductService> appProductServiceList = appProductServiceRepository.findAll();
+        List<AppProductOfferingService> appProductServiceList = appProductOfferingServiceRepository.findAll();
         assertThat(appProductServiceList).hasSize(databaseSizeBeforeUpdate);
-        AppProductService testAppProductService = appProductServiceList.get(appProductServiceList.size() - 1);
-        assertThat(testAppProductService.getProductServiceId()).isEqualTo(UPDATED_PRODUCT_SERVICE_ID);
+        AppProductOfferingService testAppProductService = appProductServiceList.get(appProductServiceList.size() - 1);
+        assertThat(testAppProductService.getProductOfferingServiceId()).isEqualTo(UPDATED_PRODUCT_SERVICE_ID);
         assertThat(testAppProductService.getStatus()).isEqualTo(UPDATED_STATUS);
     }
 
     @Test
     @Transactional
     public void updateNonExistingAppProductService() throws Exception {
-        int databaseSizeBeforeUpdate = appProductServiceRepository.findAll().size();
+        int databaseSizeBeforeUpdate = appProductOfferingServiceRepository.findAll().size();
 
         // Create the AppProductService
-        AppProductServiceDTO appProductServiceDTO = appProductServiceMapper.toDto(appProductService);
+        AppProductOfferingServiceDTO appProductOfferingServiceDTO = appProductOfferingServiceMapper.toDto(appProductOfferingService);
 
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restAppProductServiceMockMvc.perform(put("/api/app-product-services").with(csrf())
             .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(appProductServiceDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(appProductOfferingServiceDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the AppProductService in the database
-        List<AppProductService> appProductServiceList = appProductServiceRepository.findAll();
+        List<AppProductOfferingService> appProductServiceList = appProductOfferingServiceRepository.findAll();
         assertThat(appProductServiceList).hasSize(databaseSizeBeforeUpdate);
     }
 
@@ -224,17 +224,17 @@ public class AppProductServiceResourceIT {
     @Transactional
     public void deleteAppProductService() throws Exception {
         // Initialize the database
-        appProductServiceRepository.saveAndFlush(appProductService);
+        appProductOfferingServiceRepository.saveAndFlush(appProductOfferingService);
 
-        int databaseSizeBeforeDelete = appProductServiceRepository.findAll().size();
+        int databaseSizeBeforeDelete = appProductOfferingServiceRepository.findAll().size();
 
         // Delete the appProductService
-        restAppProductServiceMockMvc.perform(delete("/api/app-product-services/{id}", appProductService.getId()).with(csrf())
+        restAppProductServiceMockMvc.perform(delete("/api/app-product-services/{id}", appProductOfferingService.getId()).with(csrf())
             .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isNoContent());
 
         // Validate the database contains one less item
-        List<AppProductService> appProductServiceList = appProductServiceRepository.findAll();
+        List<AppProductOfferingService> appProductServiceList = appProductOfferingServiceRepository.findAll();
         assertThat(appProductServiceList).hasSize(databaseSizeBeforeDelete - 1);
     }
 }

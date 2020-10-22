@@ -1,6 +1,8 @@
 package com.dreamfolkstech.appconfig.service.dto;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -29,6 +31,8 @@ public class ProductOfferingDTO extends AbstractAuditingDTO implements Serializa
     private Integer sortOrder;
 
     private GenericStatus status;
+    
+    private List<ProductOfferingServiceDTO> productOfferingServices = new ArrayList<>();
 
     
     public Long getId() {
@@ -79,7 +83,15 @@ public class ProductOfferingDTO extends AbstractAuditingDTO implements Serializa
         this.status = status;
     }
 
-    @Override
+    public List<ProductOfferingServiceDTO> getProductOfferingServices() {
+		return productOfferingServices;
+	}
+
+	public void setProductOfferingServices(List<ProductOfferingServiceDTO> productOfferingServices) {
+		this.productOfferingServices = productOfferingServices;
+	}
+
+	@Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;

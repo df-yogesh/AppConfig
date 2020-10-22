@@ -13,14 +13,14 @@ import javax.validation.constraints.Size;
 
 import com.dreamfolkstech.common.domain.AbstractBaseExtensibleEntity;
 import com.dreamfolkstech.common.domain.enumeration.GenericStatus;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * A ProductService.
  */
 @Entity
-@Table(name = "product_service")
-public class ProductService extends AbstractBaseExtensibleEntity<Long> implements Serializable {
+@Table(name = "product_offering_service")
+public class ProductOfferingService extends AbstractBaseExtensibleEntity<Long> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -43,7 +43,7 @@ public class ProductService extends AbstractBaseExtensibleEntity<Long> implement
     private GenericStatus status;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = "productServices", allowSetters = true)
+    @JsonIgnore
     private ProductOffering productOffering;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -51,7 +51,7 @@ public class ProductService extends AbstractBaseExtensibleEntity<Long> implement
         return name;
     }
 
-    public ProductService name(String name) {
+    public ProductOfferingService name(String name) {
         this.name = name;
         return this;
     }
@@ -64,7 +64,7 @@ public class ProductService extends AbstractBaseExtensibleEntity<Long> implement
         return code;
     }
 
-    public ProductService code(String code) {
+    public ProductOfferingService code(String code) {
         this.code = code;
         return this;
     }
@@ -77,7 +77,7 @@ public class ProductService extends AbstractBaseExtensibleEntity<Long> implement
         return description;
     }
 
-    public ProductService description(String description) {
+    public ProductOfferingService description(String description) {
         this.description = description;
         return this;
     }
@@ -90,7 +90,7 @@ public class ProductService extends AbstractBaseExtensibleEntity<Long> implement
         return status;
     }
 
-    public ProductService status(GenericStatus status) {
+    public ProductOfferingService status(GenericStatus status) {
         this.status = status;
         return this;
     }
@@ -103,7 +103,7 @@ public class ProductService extends AbstractBaseExtensibleEntity<Long> implement
         return productOffering;
     }
 
-    public ProductService productOffering(ProductOffering productOffering) {
+    public ProductOfferingService productOffering(ProductOffering productOffering) {
         this.productOffering = productOffering;
         return this;
     }
@@ -118,10 +118,10 @@ public class ProductService extends AbstractBaseExtensibleEntity<Long> implement
         if (this == o) {
             return true;
         }
-        if (!(o instanceof ProductService)) {
+        if (!(o instanceof ProductOfferingService)) {
             return false;
         }
-        return this.getId() != null && this.getId().equals(((ProductService) o).getId());
+        return this.getId() != null && this.getId().equals(((ProductOfferingService) o).getId());
     }
 
     @Override
@@ -132,7 +132,7 @@ public class ProductService extends AbstractBaseExtensibleEntity<Long> implement
     // prettier-ignore
     @Override
     public String toString() {
-        return "ProductService{" +
+        return "ProductOfferingService{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
             ", code='" + getCode() + "'" +

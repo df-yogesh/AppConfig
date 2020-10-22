@@ -14,7 +14,10 @@ import com.dreamfolkstech.appconfig.repository.AppUserFieldMapRepository;
 import com.dreamfolkstech.appconfig.service.AppUserFieldMapService;
 import com.dreamfolkstech.appconfig.service.dto.AppUserFieldMapDTO;
 import com.dreamfolkstech.appconfig.service.mapper.AppUserFieldMapMapper;
+import com.dreamfolkstech.appconfig.service.util.UtilityFunctions;
+import com.dreamfolkstech.appconfig.web.rest.errors.ErrorConstants;
 import com.dreamfolkstech.common.domain.enumeration.GenericStatus;
+import com.dreamfolkstech.common.errors.ExternalBaseResponse;
 
 /**
  * Service Implementation for managing {@link AppUserFieldMap}.
@@ -64,4 +67,14 @@ public class AppUserFieldMapServiceImpl implements AppUserFieldMapService {
         log.debug("Request to delete AppUserFieldMap : {}", id);
         appUserFieldMapRepository.deleteById(id);
     }
+
+	/**fetch all enabled user fields parameters by app code
+	 *@param code
+	 */
+	@Override
+	public ExternalBaseResponse findAllByCode(String code) {
+        log.debug("Request to get all AppUserFieldMaps for appCode {}",code);
+        return UtilityFunctions.getBaseExternalResponse(ErrorConstants.SUCCESS,
+        	appUserFieldMapMapper.toDto(appUserFieldMapRepository.findAllByCode(code)));
+	}
 }

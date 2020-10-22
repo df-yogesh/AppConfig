@@ -60,6 +60,12 @@ public class AppUserFieldMap extends AbstractBaseExtensibleEntity<Long> implemen
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "status")
     private GenericStatus status;
+    
+    @Column(name = "group_sort_order")
+    private Integer groupSortOrder;
+    
+    @Column(name = "field_sort_order")
+    private Integer fieldSortOrder;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Integer getAppId() {
@@ -186,6 +192,23 @@ public class AppUserFieldMap extends AbstractBaseExtensibleEntity<Long> implemen
 
 	public void setStatus(GenericStatus status) {
 		this.status = status;
+	}
+
+	
+	public Integer getGroupSortOrder() {
+		return groupSortOrder;
+	}
+
+	public void setGroupSortOrder(Integer groupSortOrder) {
+		this.groupSortOrder = groupSortOrder;
+	}
+
+	public Integer getFieldSortOrder() {
+		return fieldSortOrder;
+	}
+
+	public void setFieldSortOrder(Integer fieldSortOrder) {
+		this.fieldSortOrder = fieldSortOrder;
 	}
 
 	@Override

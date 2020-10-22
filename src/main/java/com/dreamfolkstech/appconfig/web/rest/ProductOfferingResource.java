@@ -28,6 +28,7 @@ import com.dreamfolkstech.appconfig.service.dto.ProductOfferingDTO;
 import com.dreamfolkstech.appconfig.web.rest.errors.ErrorConstants;
 import com.dreamfolkstech.common.dto.BaseResponse;
 import com.dreamfolkstech.common.errors.CustomException;
+import com.dreamfolkstech.common.errors.ExternalBaseResponse;
 
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.PaginationUtil;
@@ -132,4 +133,17 @@ public class ProductOfferingResource {
         productOfferingService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString())).build();
     }
+    
+    /**
+	 * {@code GET /app-product-services/{code}} : Api to get all product service by
+	 * product code
+	 * @param id
+	 * @return
+	 */
+	@GetMapping("/app-product-services/code/{code}")
+	public ResponseEntity<ExternalBaseResponse> getAppProductServiceByAppCode(@PathVariable String code) {
+		log.debug("REST request to get product offering By appCode: {}", code);
+		ExternalBaseResponse externalBaseResponse = productOfferingService.findAllByAppCode(code);
+		return ResponseEntity.ok().body(externalBaseResponse);
+	}
 }

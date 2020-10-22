@@ -6,9 +6,9 @@ import com.dreamfolkstech.common.domain.enumeration.GenericStatus;
 import com.dreamfolkstech.common.dto.AbstractAuditingDTO;
 
 /**
- * A DTO for the {@link com.dreamfolkstech.appconfig.domain.AppProductService} entity.
+ * A DTO for the {@link com.dreamfolkstech.appconfig.domain.AppProductOfferingService} entity.
  */
-public class AppProductServiceDTO extends AbstractAuditingDTO implements Serializable {
+public class AppProductOfferingServiceDTO extends AbstractAuditingDTO implements Serializable {
     
     private Long id;
 
@@ -66,11 +66,11 @@ public class AppProductServiceDTO extends AbstractAuditingDTO implements Seriali
         if (this == o) {
             return true;
         }
-        if (!(o instanceof AppProductServiceDTO)) {
+        if (!(o instanceof AppProductOfferingServiceDTO)) {
             return false;
         }
 
-        return id != null && id.equals(((AppProductServiceDTO) o).id);
+        return id != null && id.equals(((AppProductOfferingServiceDTO) o).id);
     }
 
     @Override

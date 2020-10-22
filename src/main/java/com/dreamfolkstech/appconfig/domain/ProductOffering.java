@@ -2,9 +2,9 @@ package com.dreamfolkstech.appconfig.domain;
 
 
 import java.io.Serializable;
-import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -47,8 +47,8 @@ public class ProductOffering extends AbstractBaseExtensibleEntity<Long> implemen
     @Column(name = "status")
     private GenericStatus status;
 
-    @OneToMany(mappedBy = "productOffering")
-    private Set<ProductService> productServices = new HashSet<>();
+    @OneToMany(mappedBy = "productOffering", cascade = CascadeType.ALL)
+    private Set<ProductOfferingService> productOfferingServices;
 
 
     public String getName() {
@@ -116,29 +116,29 @@ public class ProductOffering extends AbstractBaseExtensibleEntity<Long> implemen
         this.status = status;
     }
 
-    public Set<ProductService> getProductServices() {
-        return productServices;
+    public Set<ProductOfferingService> getProductOfferingServices() {
+        return productOfferingServices;
     }
 
-    public ProductOffering productServices(Set<ProductService> productServices) {
-        this.productServices = productServices;
+    public ProductOffering productOfferingServices(Set<ProductOfferingService> productOfferingServices) {
+        this.productOfferingServices = productOfferingServices;
         return this;
     }
 
-    public ProductOffering addProductService(ProductService productService) {
-        this.productServices.add(productService);
-        productService.setProductOffering(this);
+    public ProductOffering addProductOfferingService(ProductOfferingService productOfferingService) {
+        this.productOfferingServices.add(productOfferingService);
+        productOfferingService.setProductOffering(this);
         return this;
     }
 
-    public ProductOffering removeProductService(ProductService productService) {
-        this.productServices.remove(productService);
-        productService.setProductOffering(null);
+    public ProductOffering removeProductOfferingService(ProductOfferingService productOfferingService) {
+        this.productOfferingServices.remove(productOfferingService);
+        productOfferingService.setProductOffering(null);
         return this;
     }
 
-    public void setProductServices(Set<ProductService> productServices) {
-        this.productServices = productServices;
+    public void setProductOfferingServices(Set<ProductOfferingService> productOfferingServices) {
+        this.productOfferingServices = productOfferingServices;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 

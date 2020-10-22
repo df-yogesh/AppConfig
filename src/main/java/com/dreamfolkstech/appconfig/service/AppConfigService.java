@@ -1,11 +1,12 @@
 package com.dreamfolkstech.appconfig.service;
 
-import com.dreamfolkstech.appconfig.service.dto.AppConfigDTO;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import java.util.Optional;
+import com.dreamfolkstech.appconfig.service.dto.AppConfigDTO;
+import com.dreamfolkstech.common.errors.ExternalBaseResponse;
 
 /**
  * Service Interface for managing {@link com.dreamfolkstech.appconfig.domain.AppConfig}.
@@ -43,4 +44,6 @@ public interface AppConfigService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+	ExternalBaseResponse findAllByProductCode(String code,Optional<Long> requestTime, Optional<String> deviceInfo);
 }

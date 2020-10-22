@@ -1,10 +1,11 @@
 package com.dreamfolkstech.appconfig.service.mapper;
 
 
-import com.dreamfolkstech.appconfig.domain.*;
-import com.dreamfolkstech.appconfig.service.dto.ApplicationDTO;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
-import org.mapstruct.*;
+import com.dreamfolkstech.appconfig.domain.Application;
+import com.dreamfolkstech.appconfig.service.dto.ApplicationDTO;
 
 /**
  * Mapper for the entity {@link Application} and its DTO {@link ApplicationDTO}.
