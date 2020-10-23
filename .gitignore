@@ -120,7 +120,7 @@ Desktop.ini
 ######################
 # Logs
 ######################
-*.log*
+#*.log*
 
 ######################
 # Others
@@ -144,4 +144,5 @@ Desktop.ini
 # ESLint
 ######################
 .eslintcache
-*.xml
+##*.xml
+src/main/resources/config/liquibase/*
